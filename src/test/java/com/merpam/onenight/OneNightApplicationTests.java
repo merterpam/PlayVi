@@ -1,4 +1,4 @@
-package com.merpam.onenight.onenight;
+package com.merpam.onenight;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
