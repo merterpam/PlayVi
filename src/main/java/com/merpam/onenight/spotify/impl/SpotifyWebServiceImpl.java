@@ -15,10 +15,12 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
 
     @Override
     @HystrixCommand(groupKey = Constants.HystrixGroups.SPOTIFY)
-    public TracksResponse getSongs(String query) {
+    public TracksResponse getSongs(String query, String limit, String offset) {
         Map<String, String> queryParam = new HashMap<>();
         queryParam.put("q", query);
         queryParam.put("type", "track");
+        queryParam.put("limit", limit);
+        queryParam.put("offset", offset);
 
         return doHttpGetRequest("/search", queryParam, TracksResponse.class);
     }

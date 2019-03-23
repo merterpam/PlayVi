@@ -13,6 +13,8 @@ public class Song {
 
     private Artist[] artists;
 
+    private Album album;
+
     public String getName() {
         return name;
     }
@@ -43,5 +45,13 @@ public class Song {
 
     public void setDuration_ms(int duration_ms) {
         this.duration_ms = duration_ms;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 }

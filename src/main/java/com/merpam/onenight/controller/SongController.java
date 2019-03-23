@@ -17,7 +17,9 @@ public class SongController {
     SpotifyWebService spotifyWebService;
 
     @GetMapping("/search")
-    public TracksResponse searchSong(@RequestParam("q") String query) {
-        return spotifyWebService.getSongs(query);
+    public TracksResponse searchSong(@RequestParam("q") String query,
+                                     @RequestParam("limit") String limit,
+                                     @RequestParam("offset") String offset) {
+        return spotifyWebService.getSongs(query, limit, offset);
     }
 }
