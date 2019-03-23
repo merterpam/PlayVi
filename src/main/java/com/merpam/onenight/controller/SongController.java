@@ -2,15 +2,13 @@ package com.merpam.onenight.controller;
 
 import com.merpam.onenight.spotify.SpotifyWebService;
 import com.merpam.onenight.spotify.pojo.TracksResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/song")
+@CrossOrigin
 public class SongController {
 
     @Resource
