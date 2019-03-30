@@ -1,4 +1,4 @@
-package com.merpam.onenight.spotify.pojo;
+package com.merpam.onenight.spotify.service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

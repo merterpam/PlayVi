@@ -6,5 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(exported = false)
 public interface PartyDao extends MongoRepository<Party, String> {
+    Party findByPin(String pin);
+    boolean existsByPin(String pin);
 
 }

@@ -1,9 +1,9 @@
-package com.merpam.onenight.spotify.pojo;
+package com.merpam.onenight.spotify.service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Song {
+public class SongResponse {
 
     private String id;
 
@@ -11,9 +11,9 @@ public class Song {
 
     private int duration_ms;
 
-    private Artist[] artists;
+    private ArtistResponse[] artists;
 
-    private Album album;
+    private AlbumResponse album;
 
     public String getName() {
         return name;
@@ -31,11 +31,11 @@ public class Song {
         this.id = id;
     }
 
-    public Artist[] getArtists() {
+    public ArtistResponse[] getArtists() {
         return artists;
     }
 
-    public void setArtists(Artist[] artists) {
+    public void setArtists(ArtistResponse[] artists) {
         this.artists = artists;
     }
 
@@ -47,11 +47,11 @@ public class Song {
         this.duration_ms = duration_ms;
     }
 
-    public Album getAlbum() {
+    public AlbumResponse getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(AlbumResponse album) {
         this.album = album;
     }
 }

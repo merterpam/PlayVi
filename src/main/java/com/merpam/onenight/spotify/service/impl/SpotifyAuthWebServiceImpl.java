@@ -1,15 +1,16 @@
-package com.merpam.onenight.spotify.impl;
+package com.merpam.onenight.spotify.service.impl;
 
 import com.merpam.onenight.configuration.ConfigurationService;
 import com.merpam.onenight.constants.Constants;
-import com.merpam.onenight.spotify.SpotifyAuthWebService;
-import com.merpam.onenight.spotify.pojo.RefreshTokenResponse;
+import com.merpam.onenight.spotify.service.SpotifyAuthWebService;
+import com.merpam.onenight.spotify.service.model.RefreshTokenResponse;
 import com.merpam.onenight.webservice.RestWebService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.glassfish.jersey.internal.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.Collections;
@@ -47,7 +48,7 @@ public class SpotifyAuthWebServiceImpl implements SpotifyAuthWebService {
         RefreshTokenResponse response = restWebService.doHttpPostRequest("/token",
                 Collections.emptyMap(),
                 createBasicAuthHeaders(),
-                formData,
+                Entity.form(formData),
                 RefreshTokenResponse.class);
 
         configurationService.setProperty(SPOTIFY_ACCESS_TOKEN, response.getAccess_token());

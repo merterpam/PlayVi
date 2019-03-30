@@ -1,6 +1,6 @@
 package com.merpam.onenight.utils;
 
-public class DateUtils {
+public final class DateUtils {
 
     private DateUtils() {
         //private constructor, not meant to be initialized

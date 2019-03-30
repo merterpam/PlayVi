@@ -1,13 +1,13 @@
-package com.merpam.onenight.spotify.pojo;
+package com.merpam.onenight.spotify.service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Album {
+public class AlbumResponse {
 
     private String id;
     
-    private Image[] images;
+    private ImageResponse[] images;
 
     public String getId() {
         return id;
@@ -17,11 +17,11 @@ public class Album {
         this.id = id;
     }
 
-    public Image[] getImages() {
+    public ImageResponse[] getImages() {
         return images;
     }
 
-    public void setImages(Image[] images) {
+    public void setImages(ImageResponse[] images) {
         this.images = images;
     }
 }
