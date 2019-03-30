@@ -2,9 +2,15 @@ package com.merpam.onenight.persistence.service;
 
 import com.merpam.onenight.persistence.model.Party;
 
+import java.util.List;
+
 public interface PartyService {
 
-    Party createParty(String id, String accessLink, String spotifyName, String creatorUsername);
+    List<Party> findAll();
+
+    void delete(Party party);
+
+    Party createParty(String id, String spotifyId, String accessLink, String spotifyName, String creatorUsername);
 
     Party saveParty(Party party);
 

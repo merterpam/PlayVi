@@ -11,8 +11,11 @@ public class User {
 
     private String username;
 
-    public User(String username) {
+    private long timestamp;
+
+    public User(String username, long timestamp) {
         this.username = username;
+        this.timestamp = timestamp;
     }
 
     public String getId() {
@@ -25,5 +28,13 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class PartyServiceImpl implements PartyService {
@@ -20,9 +21,20 @@ public class PartyServiceImpl implements PartyService {
     private PartyDao partyDao;
 
     @Override
-    public Party createParty(String id, String accessLink, String spotifyName, String creatorUsername) {
+    public List<Party> findAll() {
+        return partyDao.findAll();
+    }
+
+    @Override
+    public void delete(Party party) {
+        partyDao.delete(party);
+    }
+
+    @Override
+    public Party createParty(String id, String spotifyId, String accessLink, String spotifyName, String creatorUsername) {
         Party party = new Party();
         party.setId(id);
+        party.setSpotifyName(spotifyId);
         party.setAccessLink(accessLink);
         party.setSpotifyName(spotifyName);
         party.setCreator(userService.createUser(creatorUsername));
