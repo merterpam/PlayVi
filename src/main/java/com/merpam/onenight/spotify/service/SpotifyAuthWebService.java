@@ -1,4 +1,4 @@
-package com.merpam.onenight.spotify;
+package com.merpam.onenight.spotify.service;
 
 public interface SpotifyAuthWebService {
 

@@ -17,7 +17,7 @@ public class RestWebService {
     }
 
     public <T> T doHttpGetRequest(String path,
-                                   Map<String, String> queryParams,
+                                   Map<String, Object> queryParams,
                                    MultivaluedMap<String, Object> headers,
                                   Class<T> responseClass) {
         return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams).request(MediaType.APPLICATION_JSON)
@@ -26,19 +26,31 @@ public class RestWebService {
     }
 
     public <T> T doHttpPostRequest(String path,
-                                   Map<String, String> queryParams,
+                                   Map<String, Object> queryParams,
                                    MultivaluedMap<String, Object> headers,
-                                   MultivaluedMap<String, String> formData,
+                                   Entity<?> postEntity,
                                    Class<T> responseClass) {
-        return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams).request(MediaType.APPLICATION_JSON)
+        return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
+                .request(MediaType.APPLICATION_JSON)
                 .headers(headers)
-                .post(Entity.form(formData))
+                .post(postEntity)
                 .readEntity(responseClass);
     }
 
-    private WebTarget createWebTargetWithBaseRequestURLAndQueryParams(String path, Map<String, String> queryParams) {
+    public <T> T doHttpDeleteRequest(String path,
+                                   Map<String, Object> queryParams,
+                                   MultivaluedMap<String, Object> headers,
+                                   Entity<?> deleteEntity,
+                                   Class<T> responseClass) {
+        return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
+                .request(MediaType.APPLICATION_JSON)
+                .headers(headers)
+                .delete(responseClass);
+    }
+
+    private WebTarget createWebTargetWithBaseRequestURLAndQueryParams(String path, Map<String, Object> queryParams) {
         WebTarget webTarget = createWebTargetWithBaseRequestURL(path);
-        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+        for (Map.Entry<String, Object> entry : queryParams.entrySet()) {
             webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
         }
 

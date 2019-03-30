@@ -8,5 +8,9 @@ public interface PartyFacade {
 
     Party getParty(String id);
 
+    Party getPartyByPin(String pin);
+
     Party removeSong(String id, String songId);
+
+    Party addSong(String id, String songId);
 }

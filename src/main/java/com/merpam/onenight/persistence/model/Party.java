@@ -1,6 +1,7 @@
 package com.merpam.onenight.persistence.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -15,8 +16,11 @@ public class Party {
     @Id
     private String id;
 
+    private String spotifyName;
+
     private List<Song> songList;
 
+    @Indexed(unique=true, sparse=true)
     private String pin;
 
     private long timestamp;
@@ -67,5 +71,13 @@ public class Party {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getSpotifyName() {
+        return spotifyName;
+    }
+
+    public void setSpotifyName(String spotifyName) {
+        this.spotifyName = spotifyName;
     }
 }

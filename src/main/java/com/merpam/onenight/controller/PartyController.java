@@ -30,15 +30,19 @@ public class PartyController {
     }
 
     @PostMapping
-    public Party joinParty(@RequestParam("id") String id,
+    public Party joinParty(@RequestParam("pin") String pin,
                            @RequestParam("username") String username,
                            HttpServletRequest request) {
-        User user = userFacade.createUser(username);
+        Party party = partyFacade.getPartyByPin(pin);
 
-        SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), id, username);
-        SessionUtils.setSessionUser(request, sessionUser);
+        if(party != null) {
+            User user = userFacade.createUser(username);
 
-        return partyFacade.getParty(id);
+            SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), party.getId(), username);
+            SessionUtils.setSessionUser(request, sessionUser);
+        }
+
+        return party;
     }
 
     @GetMapping
@@ -51,11 +55,12 @@ public class PartyController {
 
     @PostMapping("/addSong")
     public Party addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) {
-
-        return Optional
+        String partyId = Optional
                 .ofNullable(SessionUtils.getSessionUser(request))
-                .map(s -> partyFacade.getParty(s.getPartyId()))
-                .orElse(null); // TODO
+                .map(SessionUser::getPartyId)
+                .orElse(null);
+
+        return partyFacade.addSong(partyId, songId);
     }
 
     @PostMapping("/removeSong")
@@ -63,11 +68,9 @@ public class PartyController {
         String partyId = Optional
                 .ofNullable(SessionUtils.getSessionUser(request))
                 .map(SessionUser::getPartyId)
-                .orElse(null); // TODO
+                .orElse(null);
 
         return partyFacade.removeSong(partyId, songId);
-
-
     }
 
     @Autowired

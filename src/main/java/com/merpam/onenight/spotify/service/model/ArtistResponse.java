@@ -1,9 +1,9 @@
-package com.merpam.onenight.spotify.pojo;
+package com.merpam.onenight.spotify.service.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Artist {
+public class ArtistResponse {
 
     private String id;
     

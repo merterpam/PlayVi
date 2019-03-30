@@ -1,4 +1,4 @@
-package com.merpam.onenight.spotify;
+package com.merpam.onenight.spotify.service;
 
 import com.merpam.onenight.configuration.ConfigurationService;
 import com.merpam.onenight.webservice.RestWebService;
@@ -8,9 +8,13 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import java.util.Collections;
 import java.util.Map;
 
 public abstract class AbstractSpotifyWebService {
@@ -31,13 +35,31 @@ public abstract class AbstractSpotifyWebService {
         restWebService = new RestWebService(baseUrl);
     }
 
-    protected <T> T doHttpGetRequest(String path, Map<String, String> queryParams, Class<T> responseClass) {
+    protected <T> T doHttpGetRequest(String path, Map<String, Object> queryParams, Class<T> responseClass) {
         try {
             return restWebService.doHttpGetRequest(path, queryParams, createBearerHeaders(), responseClass);
         } catch (NotAuthorizedException | BadRequestException e) {
-            LOGGER.info("Gtting a new token with refresh token and trying again", e);
+            LOGGER.info("Getting a new token with refresh token and trying again", e);
             spotifyAuthWebService.refreshToken();
             return restWebService.doHttpGetRequest(path, queryParams, createBearerHeaders(), responseClass);
+        }
+    }
+
+    protected <T> T doHttpPostRequest(String path, Object requestBody, Class<T> responseClass) {
+        try {
+            return restWebService.doHttpPostRequest(path,
+                    Collections.emptyMap(),
+                    createBearerHeaders(),
+                    Entity.json(requestBody),
+                    responseClass);
+        } catch (ClientErrorException | ProcessingException e) {
+            LOGGER.info("Getting a new token with refresh token and trying again", e);
+            spotifyAuthWebService.refreshToken();
+            return restWebService.doHttpPostRequest(path,
+                    Collections.emptyMap(),
+                    createBearerHeaders(),
+                    Entity.json(requestBody),
+                    responseClass);
         }
     }
 
