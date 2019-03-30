@@ -63,7 +63,7 @@ public class PartyController {
         return partyFacade.addSong(partyId, songId);
     }
 
-    @PostMapping("/removeSong")
+    @PutMapping("/removeSong")
     public Party removeSongFromParty(@RequestParam("songId") String songId, HttpServletRequest request) {
         String partyId = Optional
                 .ofNullable(SessionUtils.getSessionUser(request))

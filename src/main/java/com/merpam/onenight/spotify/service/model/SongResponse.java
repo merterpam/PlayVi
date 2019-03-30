@@ -9,6 +9,8 @@ public class SongResponse {
 
     private String name;
 
+    private String uri;
+
     private int duration_ms;
 
     private ArtistResponse[] artists;
@@ -53,5 +55,13 @@ public class SongResponse {
 
     public void setAlbum(AlbumResponse album) {
         this.album = album;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

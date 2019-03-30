@@ -31,10 +31,9 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public Party createParty(String id, String spotifyId, String accessLink, String spotifyName, String creatorUsername) {
+    public Party createParty(String id, String accessLink, String spotifyName, String creatorUsername) {
         Party party = new Party();
         party.setId(id);
-        party.setSpotifyName(spotifyId);
         party.setAccessLink(accessLink);
         party.setSpotifyName(spotifyName);
         party.setCreator(userService.createUser(creatorUsername));

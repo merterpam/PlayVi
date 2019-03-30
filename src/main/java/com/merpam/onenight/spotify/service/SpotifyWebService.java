@@ -10,9 +10,9 @@ public interface SpotifyWebService {
 
     SongResponse getSong(String id);
 
-    void removeSongFromPlaylist(String spotifyId, String songId);
+    void removeSongFromPlaylist(String playlistId, String songId);
 
-    void addSongToPlaylist(String spotifyId, String songId);
+    void addSongToPlaylist(String playlistId, String songUri);
 
     CreatePlaylistResponse createPlayList(String name);
 

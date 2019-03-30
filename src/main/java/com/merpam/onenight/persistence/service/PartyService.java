@@ -10,7 +10,7 @@ public interface PartyService {
 
     void delete(Party party);
 
-    Party createParty(String id, String spotifyId, String accessLink, String spotifyName, String creatorUsername);
+    Party createParty(String id, String accessLink, String spotifyName, String creatorUsername);
 
     Party saveParty(Party party);
 
