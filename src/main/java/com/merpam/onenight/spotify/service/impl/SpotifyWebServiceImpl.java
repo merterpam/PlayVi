@@ -37,7 +37,12 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
     @Override
     @HystrixCommand(groupKey = Constants.HystrixGroups.SPOTIFY)
     public void removeSongFromPlaylist(String partyId, String songId) {
-        //TODO ımplement
+        //TODO implement
+    }
+
+    @Override
+    public void addSongToPlaylist(String partyId, String songId) {
+        //TODO implement
     }
 
     @Override
@@ -48,5 +53,10 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
         requestBody.put("public", false);
 
         return doHttpPostRequest("/me/playlists", requestBody, CreatePlaylistResponse.class);
+    }
+
+    @Override
+    public void deletePlaylist(String id) {
+        //TODO implement
     }
 }
