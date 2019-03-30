@@ -11,6 +11,8 @@ public class Song {
 
     private String name;
 
+    private String uri;
+
     private User creator;
 
     public String getId() {
@@ -27,5 +29,13 @@ public class Song {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

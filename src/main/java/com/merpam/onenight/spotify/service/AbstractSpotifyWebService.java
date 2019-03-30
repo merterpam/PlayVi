@@ -63,6 +63,16 @@ public abstract class AbstractSpotifyWebService {
         }
     }
 
+    protected <T> T doHttpDeleteRequest(String path, Class<T> responseClass) {
+        try {
+            return restWebService.doHttpDeleteRequest(path, Collections.emptyMap(), createBearerHeaders(), responseClass);
+        } catch (ClientErrorException | ProcessingException e) {
+            LOGGER.info("Getting a new token with refresh token and trying again", e);
+            spotifyAuthWebService.refreshToken();
+            return restWebService.doHttpDeleteRequest(path, Collections.emptyMap(), createBearerHeaders(), responseClass);
+        }
+    }
+
     private MultivaluedMap<String, Object> createBearerHeaders() {
         MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
         headers.putSingle("Accept", "application/json");

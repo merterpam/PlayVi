@@ -16,8 +16,6 @@ public class Party {
     @Id
     private String id;
 
-    private String spotifyId;
-
     private String spotifyName;
 
     private List<Song> songList;
@@ -81,13 +79,5 @@ public class Party {
 
     public void setSpotifyName(String spotifyName) {
         this.spotifyName = spotifyName;
-    }
-
-    public String getSpotifyId() {
-        return spotifyId;
-    }
-
-    public void setSpotifyId(String spotifyId) {
-        this.spotifyId = spotifyId;
     }
 }

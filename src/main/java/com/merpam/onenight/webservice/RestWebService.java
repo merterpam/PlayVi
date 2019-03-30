@@ -40,7 +40,6 @@ public class RestWebService {
     public <T> T doHttpDeleteRequest(String path,
                                    Map<String, Object> queryParams,
                                    MultivaluedMap<String, Object> headers,
-                                   Entity<?> deleteEntity,
                                    Class<T> responseClass) {
         return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
                 .request(MediaType.APPLICATION_JSON)

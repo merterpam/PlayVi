@@ -29,7 +29,6 @@ public class PartyFacadeImpl implements PartyFacade {
 
         return partyService.createParty(createPlaylistResponse.getId(),
                 createPlaylistResponse.getUri(),
-                createPlaylistResponse.getId(),
                 spotifyName,
                 creatorUsername);
     }
@@ -65,12 +64,13 @@ public class PartyFacadeImpl implements PartyFacade {
         if (party == null) {
             return null;
         }
-
-        spotifyWebService.addSongToPlaylist(party.getSpotifyName(), songId);
         SongResponse songResponse = spotifyWebService.getSong(songId); // TODO defensive programming
+        spotifyWebService.addSongToPlaylist(party.getId(), songResponse.getUri());
+
         Song song = new Song();
         song.setId(songResponse.getId());
         song.setName(songResponse.getName()); //TODO wrap the logic
+        song.setUri(songResponse.getUri());
         party.getSongList().add(song);
         return partyService.saveParty(party);
     }
