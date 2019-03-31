@@ -35,7 +35,7 @@ public class PartyController {
                            HttpServletRequest request) {
         Party party = partyFacade.getPartyByPin(pin);
 
-        if(party != null) {
+        if (party != null) {
             User user = userFacade.createUser(username);
 
             SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), party.getId(), username);
@@ -55,22 +55,30 @@ public class PartyController {
 
     @PostMapping("/addSong")
     public Party addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) {
-        String partyId = Optional
-                .ofNullable(SessionUtils.getSessionUser(request))
-                .map(SessionUser::getPartyId)
-                .orElse(null);
+        String partyId = null;
+        String userId = null;
 
-        return partyFacade.addSong(partyId, songId);
+        SessionUser sessionUser = SessionUtils.getSessionUser(request);
+        if (sessionUser != null) {
+            partyId = sessionUser.getPartyId();
+            userId = sessionUser.getId();
+        }
+
+        return partyFacade.addSong(userId, partyId, songId);
     }
 
-    @PutMapping("/removeSong")
-    public Party removeSongFromParty(@RequestParam("songId") String songId, HttpServletRequest request) {
-        String partyId = Optional
-                .ofNullable(SessionUtils.getSessionUser(request))
-                .map(SessionUser::getPartyId)
-                .orElse(null);
+    @DeleteMapping("/removeSong")
+    public Party removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position, HttpServletRequest request) {
+        String partyId = null;
+        String userId = null;
 
-        return partyFacade.removeSong(partyId, songId);
+        SessionUser sessionUser = SessionUtils.getSessionUser(request);
+        if (sessionUser != null) {
+            partyId = sessionUser.getPartyId();
+            userId = sessionUser.getId();
+        }
+
+        return partyFacade.removeSong(userId, partyId, songId, position);
     }
 
     @Autowired

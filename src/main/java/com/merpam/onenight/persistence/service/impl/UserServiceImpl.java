@@ -20,6 +20,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(String id) {
+        if(id == null) {
+            return null;
+        }
+
+        return userDao.findById(id).orElse(null);
+    }
+
+    @Override
     public User createUser(String username) {
         return userDao.save(new User(username, DateUtils.getCurrentTimestampInSeconds()));
     }

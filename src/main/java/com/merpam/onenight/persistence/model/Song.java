@@ -38,4 +38,12 @@ public class Song {
     public void setUri(String uri) {
         this.uri = uri;
     }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
 }

@@ -1,5 +1,7 @@
 package com.merpam.onenight.webservice;
 
+import org.glassfish.jersey.client.ClientProperties;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -17,8 +19,8 @@ public class RestWebService {
     }
 
     public <T> T doHttpGetRequest(String path,
-                                   Map<String, Object> queryParams,
-                                   MultivaluedMap<String, Object> headers,
+                                  Map<String, Object> queryParams,
+                                  MultivaluedMap<String, Object> headers,
                                   Class<T> responseClass) {
         return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams).request(MediaType.APPLICATION_JSON)
                 .headers(headers)
@@ -38,13 +40,15 @@ public class RestWebService {
     }
 
     public <T> T doHttpDeleteRequest(String path,
-                                   Map<String, Object> queryParams,
-                                   MultivaluedMap<String, Object> headers,
-                                   Class<T> responseClass) {
+                                     Map<String, Object> queryParams,
+                                     Object requestBody,
+                                     MultivaluedMap<String, Object> headers,
+                                     Class<T> responseClass) {
         return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
+                .property(ClientProperties.SUPPRESS_HTTP_COMPLIANCE_VALIDATION, true)
                 .request(MediaType.APPLICATION_JSON)
                 .headers(headers)
-                .delete(responseClass);
+                .method("DELETE", Entity.json(requestBody), responseClass);
     }
 
     private WebTarget createWebTargetWithBaseRequestURLAndQueryParams(String path, Map<String, Object> queryParams) {

@@ -10,7 +10,7 @@ public interface PartyFacade {
 
     Party getPartyByPin(String pin);
 
-    Party removeSong(String id, String songId);
+    Party removeSong(String userId, String partyId, String songId, int position);
 
-    Party addSong(String id, String songId);
+    Party addSong(String userId, String partyId, String songId);
 }

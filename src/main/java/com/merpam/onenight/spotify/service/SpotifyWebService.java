@@ -10,7 +10,7 @@ public interface SpotifyWebService {
 
     SongResponse getSong(String id);
 
-    void removeSongFromPlaylist(String playlistId, String songId);
+    void removeSongFromPlaylist(String playlistId, String songId, int position);
 
     void addSongToPlaylist(String playlistId, String songUri);
 
