@@ -7,18 +7,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document
-public class Party {
+public class PartyModel {
 
     private String accessLink;
 
-    private User creator;
+    private UserModel creator;
 
     @Id
     private String id;
 
     private String spotifyName;
 
-    private List<Song> songList;
+    private List<SongModel> songList;
 
     @Indexed(unique=true, sparse=true)
     private String pin;
@@ -33,11 +33,11 @@ public class Party {
         this.accessLink = accessLink;
     }
 
-    public User getCreator() {
+    public UserModel getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(UserModel creator) {
         this.creator = creator;
     }
 
@@ -49,11 +49,11 @@ public class Party {
         this.id = id;
     }
 
-    public List<Song> getSongList() {
+    public List<SongModel> getSongList() {
         return songList;
     }
 
-    public void setSongList(List<Song> songList) {
+    public void setSongList(List<SongModel> songList) {
         this.songList = songList;
     }
 

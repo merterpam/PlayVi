@@ -1,16 +1,16 @@
 package com.merpam.onenight.persistence.facade;
 
-import com.merpam.onenight.persistence.model.Party;
+import com.merpam.onenight.persistence.model.PartyModel;
 
 public interface PartyFacade {
 
-    Party createParty(String creatorUsername);
+    PartyModel createParty(String creatorUsername);
 
-    Party getParty(String id);
+    PartyModel getParty(String id);
 
-    Party getPartyByPin(String pin);
+    PartyModel getPartyByPin(String pin);
 
-    Party removeSong(String userId, String partyId, String songId, int position);
+    PartyModel removeSong(String userId, String partyId, String songId, int position);
 
-    Party addSong(String userId, String partyId, String songId);
+    PartyModel addSong(String userId, String partyId, String songId);
 }
