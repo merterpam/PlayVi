@@ -1,7 +1,7 @@
 package com.merpam.onenight.persistence.facade;
 
-import com.merpam.onenight.persistence.model.User;
+import com.merpam.onenight.persistence.model.UserModel;
 
 public interface UserFacade {
-    User createUser(String username);
+    UserModel createUser(String username);
 }

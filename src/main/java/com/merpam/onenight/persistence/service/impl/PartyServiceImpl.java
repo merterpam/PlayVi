@@ -1,7 +1,7 @@
 package com.merpam.onenight.persistence.service.impl;
 
 import com.merpam.onenight.persistence.dao.PartyDao;
-import com.merpam.onenight.persistence.model.Party;
+import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.service.PartyService;
 import com.merpam.onenight.persistence.service.UserService;
 import com.merpam.onenight.utils.DateUtils;
@@ -21,18 +21,18 @@ public class PartyServiceImpl implements PartyService {
     private PartyDao partyDao;
 
     @Override
-    public List<Party> findAll() {
+    public List<PartyModel> findAll() {
         return partyDao.findAll();
     }
 
     @Override
-    public void delete(Party party) {
+    public void delete(PartyModel party) {
         partyDao.delete(party);
     }
 
     @Override
-    public Party createParty(String id, String accessLink, String spotifyName, String creatorUsername) {
-        Party party = new Party();
+    public PartyModel createParty(String id, String accessLink, String spotifyName, String creatorUsername) {
+        PartyModel party = new PartyModel();
         party.setId(id);
         party.setAccessLink(accessLink);
         party.setSpotifyName(spotifyName);
@@ -54,12 +54,12 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public Party saveParty(Party party) {
+    public PartyModel saveParty(PartyModel party) {
         return partyDao.save(party);
     }
 
     @Override
-    public Party getParty(String id) {
+    public PartyModel getParty(String id) {
         if(id == null) {
             return null;
         }
@@ -68,7 +68,7 @@ public class PartyServiceImpl implements PartyService {
     }
 
     @Override
-    public Party getPartyByPin(String pin) {
+    public PartyModel getPartyByPin(String pin) {
         if(pin == null) {
             return null;
         }

@@ -1,8 +1,8 @@
 package com.merpam.onenight.utils;
 
-import com.merpam.onenight.persistence.model.Party;
-import com.merpam.onenight.persistence.model.Song;
-import com.merpam.onenight.persistence.model.User;
+import com.merpam.onenight.persistence.model.PartyModel;
+import com.merpam.onenight.persistence.model.SongModel;
+import com.merpam.onenight.persistence.model.UserModel;
 import com.merpam.onenight.spotify.service.model.DeleteSongRequest;
 import com.merpam.onenight.spotify.service.model.DeleteTrackRequest;
 
@@ -27,8 +27,8 @@ public class WebServiceUtils {
         return deleteSongRequest;
     }
 
-    public static boolean isSongRemovable(Party party, String songUri, int position, User user) {
-        Song song = party.getSongList().get(position);
+    public static boolean isSongRemovable(PartyModel party, String songUri, int position, UserModel user) {
+        SongModel song = party.getSongList().get(position);
 
         return song.getUri().equals(songUri) && (song.getCreator() == user || party.getCreator() == user);
 

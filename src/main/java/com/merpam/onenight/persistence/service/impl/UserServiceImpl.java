@@ -1,7 +1,7 @@
 package com.merpam.onenight.persistence.service.impl;
 
 import com.merpam.onenight.persistence.dao.UserDao;
-import com.merpam.onenight.persistence.model.User;
+import com.merpam.onenight.persistence.model.UserModel;
 import com.merpam.onenight.persistence.service.UserService;
 import com.merpam.onenight.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public List<User> findAll() {
+    public List<UserModel> findAll() {
         return userDao.findAll();
     }
 
     @Override
-    public User findById(String id) {
+    public UserModel findById(String id) {
         if(id == null) {
             return null;
         }
@@ -29,12 +29,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(String username) {
-        return userDao.save(new User(username, DateUtils.getCurrentTimestampInSeconds()));
+    public UserModel createUser(String username) {
+        return userDao.save(new UserModel(username, DateUtils.getCurrentTimestampInSeconds()));
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(UserModel user) {
         userDao.delete(user);
     }
 

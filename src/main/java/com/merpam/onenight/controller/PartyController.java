@@ -2,8 +2,8 @@ package com.merpam.onenight.controller;
 
 import com.merpam.onenight.persistence.facade.PartyFacade;
 import com.merpam.onenight.persistence.facade.UserFacade;
-import com.merpam.onenight.persistence.model.Party;
-import com.merpam.onenight.persistence.model.User;
+import com.merpam.onenight.persistence.model.PartyModel;
+import com.merpam.onenight.persistence.model.UserModel;
 import com.merpam.onenight.session.SessionUser;
 import com.merpam.onenight.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,8 @@ public class PartyController {
     private UserFacade userFacade;
 
     @PostMapping("/create")
-    public Party createParty(@RequestParam("username") String username, HttpServletRequest request) {
-        Party party = partyFacade.createParty(username);
+    public PartyModel createParty(@RequestParam("username") String username, HttpServletRequest request) {
+        PartyModel party = partyFacade.createParty(username);
 
         SessionUser sessionUser = SessionUtils.generateSessionUser(party.getCreator().getId(), party.getId(), username);
         SessionUtils.setSessionUser(request, sessionUser);
@@ -30,13 +30,13 @@ public class PartyController {
     }
 
     @PostMapping
-    public Party joinParty(@RequestParam("pin") String pin,
-                           @RequestParam("username") String username,
-                           HttpServletRequest request) {
-        Party party = partyFacade.getPartyByPin(pin);
+    public PartyModel joinParty(@RequestParam("pin") String pin,
+                                @RequestParam("username") String username,
+                                HttpServletRequest request) {
+        PartyModel party = partyFacade.getPartyByPin(pin);
 
         if (party != null) {
-            User user = userFacade.createUser(username);
+            UserModel user = userFacade.createUser(username);
 
             SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), party.getId(), username);
             SessionUtils.setSessionUser(request, sessionUser);
@@ -46,7 +46,7 @@ public class PartyController {
     }
 
     @GetMapping
-    public Party getParty(HttpServletRequest request) {
+    public PartyModel getParty(HttpServletRequest request) {
         return Optional
                 .ofNullable(SessionUtils.getSessionUser(request))
                 .map(s -> partyFacade.getParty(s.getPartyId()))
@@ -54,7 +54,7 @@ public class PartyController {
     }
 
     @PostMapping("/addSong")
-    public Party addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) {
+    public PartyModel addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) {
         String partyId = null;
         String userId = null;
 
@@ -68,7 +68,7 @@ public class PartyController {
     }
 
     @DeleteMapping("/removeSong")
-    public Party removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position, HttpServletRequest request) {
+    public PartyModel removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position, HttpServletRequest request) {
         String partyId = null;
         String userId = null;
 

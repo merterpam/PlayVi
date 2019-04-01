@@ -1,16 +1,16 @@
 package com.merpam.onenight.persistence.service;
 
-import com.merpam.onenight.persistence.model.User;
+import com.merpam.onenight.persistence.model.UserModel;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<UserModel> findAll();
 
-    User findById(String id);
+    UserModel findById(String id);
 
-    User createUser(String username);
+    UserModel createUser(String username);
 
-    void delete(User user);
+    void delete(UserModel user);
 }

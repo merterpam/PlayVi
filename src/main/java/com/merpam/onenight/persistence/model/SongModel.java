@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Song {
+public class SongModel {
 
     @Id
     private String id;
@@ -13,7 +13,7 @@ public class Song {
 
     private String uri;
 
-    private User creator;
+    private UserModel creator;
 
     public String getId() {
         return id;
@@ -39,11 +39,11 @@ public class Song {
         this.uri = uri;
     }
 
-    public User getCreator() {
+    public UserModel getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(UserModel creator) {
         this.creator = creator;
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class User {
+public class UserModel {
 
     @Id
     private String id;
@@ -13,7 +13,7 @@ public class User {
 
     private long timestamp;
 
-    public User(String username, long timestamp) {
+    public UserModel(String username, long timestamp) {
         this.username = username;
         this.timestamp = timestamp;
     }
