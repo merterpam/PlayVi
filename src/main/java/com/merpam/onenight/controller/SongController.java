@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/song")
-@CrossOrigin
 public class SongController {
 
     @Resource
