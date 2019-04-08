@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
+@CrossOrigin(allowCredentials = "true")
 public class PartyController {
 
     private PartyFacade partyFacade;
