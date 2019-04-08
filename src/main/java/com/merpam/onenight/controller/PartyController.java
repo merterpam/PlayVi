@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
-@CrossOrigin(exposedHeaders = {"JSESSONID"}, allowCredentials = "true")
+@CrossOrigin(origins = "https://one-night-spotify.herokuapp.com", exposedHeaders = {"JSESSONID"}, allowCredentials = "true")
 public class PartyController {
 
     private PartyFacade partyFacade;
