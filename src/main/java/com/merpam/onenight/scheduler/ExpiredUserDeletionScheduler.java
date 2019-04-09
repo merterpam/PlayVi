@@ -13,7 +13,7 @@ public class ExpiredUserDeletionScheduler {
 
     private UserService userService;
 
-    @Scheduled(cron = "0 0 0 */1 * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void runExpiredUserDeletionScheduler() {
         Date today = new Date();
         userService.findAll()
