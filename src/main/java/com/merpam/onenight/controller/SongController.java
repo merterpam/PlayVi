@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/song")
-@CrossOrigin(allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "http://one-night-spotify.herokuapp.com"}, allowCredentials = "true")
 public class SongController {
 
     @Resource
