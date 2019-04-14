@@ -1,5 +1,6 @@
 package com.merpam.onenight.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.merpam.onenight.persistence.facade.PartyFacade;
 import com.merpam.onenight.persistence.facade.UserFacade;
 import com.merpam.onenight.persistence.model.PartyModel;
@@ -10,32 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
-//@CrossOrigin(origins = "https://one-night-spotify.herokuapp.com", exposedHeaders = {"JSESSONID"}, allowCredentials = "true")
-@CrossOrigin(origins = {"http://localhost:3000", "https://one-night-spotify.herokuapp.com"},
-        allowCredentials = "true",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.HEAD, RequestMethod.OPTIONS})
+@CrossOrigin(origins = {"http://localhost:3000", "https://one-night-spotify.herokuapp.com"}, allowCredentials = "true")
 public class PartyController {
 
     private PartyFacade partyFacade;
     private UserFacade userFacade;
 
 
-    @GetMapping("/dummy")
-    public void createDummyMethod(HttpServletRequest request) {
-        SessionUser sessionUser = SessionUtils.generateSessionUser("abd", "aa", "aa");
-        SessionUtils.setSessionUser(request, sessionUser);
-    }
-
     @PostMapping("/create")
-    public PartyModel createParty(@RequestParam("username") String username, HttpServletRequest request) {
+    public PartyModel createParty(@RequestParam("username") String username, HttpServletResponse response) throws JsonProcessingException {
         PartyModel party = partyFacade.createParty(username);
 
         SessionUser sessionUser = SessionUtils.generateSessionUser(party.getCreator().getId(), party.getId(), username);
-        SessionUtils.setSessionUser(request, sessionUser);
+        SessionUtils.setSessionUser(response, sessionUser);
 
         return party;
     }
@@ -43,21 +37,21 @@ public class PartyController {
     @PostMapping
     public PartyModel joinParty(@RequestParam("pin") String pin,
                                 @RequestParam("username") String username,
-                                HttpServletRequest request) {
+                                HttpServletResponse response) throws JsonProcessingException {
         PartyModel party = partyFacade.getPartyByPin(pin);
 
         if (party != null) {
             UserModel user = userFacade.createUser(username);
 
             SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), party.getId(), username);
-            SessionUtils.setSessionUser(request, sessionUser);
+            SessionUtils.setSessionUser(response, sessionUser);
         }
 
         return party;
     }
 
     @GetMapping
-    public PartyModel getParty(HttpServletRequest request) {
+    public PartyModel getParty(HttpServletRequest request) throws IOException {
         return Optional
                 .ofNullable(SessionUtils.getSessionUser(request))
                 .map(s -> partyFacade.getParty(s.getPartyId()))
@@ -65,7 +59,7 @@ public class PartyController {
     }
 
     @PostMapping("/addSong")
-    public PartyModel addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) {
+    public PartyModel addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) throws IOException {
         String partyId = null;
         String userId = null;
 
@@ -79,7 +73,7 @@ public class PartyController {
     }
 
     @DeleteMapping("/removeSong")
-    public PartyModel removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position, HttpServletRequest request) {
+    public PartyModel removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position, HttpServletRequest request) throws IOException {
         String partyId = null;
         String userId = null;
 
