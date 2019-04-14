@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 
 @Component
@@ -16,8 +17,18 @@ public class ExpiredUserDeletionScheduler {
     private static final Logger LOG = LoggerFactory.getLogger(ExpiredPlaylistDeletionScheduler.class);
     private UserService userService;
 
+    @PostConstruct
+    public void onStartup() {
+        deleteExpiredUsers();
+    }
+
+
     @Scheduled(cron = "0 0 0 * * *")
     public void runExpiredUserDeletionScheduler() {
+        deleteExpiredUsers();
+    }
+
+    private void deleteExpiredUsers() {
         LOG.info("I'm triggered");
 
         Date today = new Date();
