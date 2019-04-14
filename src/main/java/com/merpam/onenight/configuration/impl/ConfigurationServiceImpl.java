@@ -14,8 +14,7 @@ import java.util.Properties;
 @Service
 public class ConfigurationServiceImpl implements ConfigurationService {
 
-    private Logger logger = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
-
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
     @Value(value = "classpath:${properties.path}")
     private Resource propertiesResource;
@@ -27,7 +26,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         try {
             properties.load(propertiesResource.getInputStream());
         } catch (IOException e) {
-            logger.error("Cannot find propertıes path", e);
+            LOG.error("Cannot find propertıes path", e);
         }
     }
 
