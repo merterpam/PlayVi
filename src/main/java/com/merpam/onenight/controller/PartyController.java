@@ -23,6 +23,13 @@ public class PartyController {
     private PartyFacade partyFacade;
     private UserFacade userFacade;
 
+
+    @GetMapping("/dummy")
+    public void createDummyMethod(HttpServletRequest request) {
+        SessionUser sessionUser = SessionUtils.generateSessionUser("abd", "aa", "aa");
+        SessionUtils.setSessionUser(request, sessionUser);
+    }
+
     @PostMapping("/create")
     public PartyModel createParty(@RequestParam("username") String username, HttpServletRequest request) {
         PartyModel party = partyFacade.createParty(username);
