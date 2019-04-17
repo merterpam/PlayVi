@@ -8,6 +8,10 @@ public class SessionUser {
 
     private String username;
 
+    public SessionUser() {
+        //default cons for jackson
+    }
+
     public SessionUser(String id, String partyId, String username) {
         this.id = id;
         this.partyId = partyId;
