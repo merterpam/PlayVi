@@ -82,6 +82,7 @@ public class PartyFacadeImpl implements PartyFacade {
         song.setName(songResponse.getName()); //TODO wrap the logic to populator
         song.setUri(songResponse.getUri());
         song.setCreator(user);
+        song.setDuration(songResponse.getDuration_ms());
         song.setArtistName(Arrays.stream(songResponse.getArtists()).findFirst().map(ArtistResponse::getName).orElse(StringUtils.EMPTY));
         song.setAlbumCoverUrl(Arrays.stream(songResponse.getAlbum().getImages()).findFirst().map(ImageResponse::getUrl).orElse(StringUtils.EMPTY));
         party.getSongList().add(song);
