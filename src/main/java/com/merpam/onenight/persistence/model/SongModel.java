@@ -15,6 +15,12 @@ public class SongModel {
 
     private UserModel creator;
 
+    private int duration;
+
+    private String artistName;
+
+    private String albumCoverUrl;
+
     public String getId() {
         return id;
     }
@@ -45,5 +51,29 @@ public class SongModel {
 
     public void setCreator(UserModel creator) {
         this.creator = creator;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public String getAlbumCoverUrl() {
+        return albumCoverUrl;
+    }
+
+    public void setAlbumCoverUrl(String albumCoverUrl) {
+        this.albumCoverUrl = albumCoverUrl;
     }
 }
