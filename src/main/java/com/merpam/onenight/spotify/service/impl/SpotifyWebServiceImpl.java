@@ -26,7 +26,7 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
     public SearchTracksResponse getSongs(String query, String limit, String offset) {
         Map<String, Object> queryParam = new HashMap<>();
         queryParam.put("q", query);
-        queryParam.put("type", "album,track");
+        queryParam.put("type", "track");
         queryParam.put("limit", limit);
         queryParam.put("offset", offset);
 
