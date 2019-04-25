@@ -3,6 +3,8 @@ package com.merpam.onenight.persistence.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document
 public class SongModel {
 
@@ -17,7 +19,7 @@ public class SongModel {
 
     private int duration;
 
-    private String artistName;
+    private List<ArtistModel> artists;
 
     private String albumCoverUrl;
 
@@ -61,19 +63,19 @@ public class SongModel {
         this.duration = duration;
     }
 
-    public String getArtistName() {
-        return artistName;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
     public String getAlbumCoverUrl() {
         return albumCoverUrl;
     }
 
     public void setAlbumCoverUrl(String albumCoverUrl) {
         this.albumCoverUrl = albumCoverUrl;
+    }
+
+    public List<ArtistModel> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<ArtistModel> artists) {
+        this.artists = artists;
     }
 }

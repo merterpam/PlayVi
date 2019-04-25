@@ -1,23 +1,24 @@
 package com.merpam.onenight.persistence.facade.impl;
 
+import com.github.javafaker.Faker;
 import com.merpam.onenight.persistence.facade.PartyFacade;
+import com.merpam.onenight.persistence.model.ArtistModel;
 import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.model.SongModel;
 import com.merpam.onenight.persistence.model.UserModel;
 import com.merpam.onenight.persistence.service.PartyService;
 import com.merpam.onenight.persistence.service.UserService;
 import com.merpam.onenight.spotify.service.SpotifyWebService;
-import com.merpam.onenight.spotify.service.model.ArtistResponse;
 import com.merpam.onenight.spotify.service.model.CreatePlaylistResponse;
 import com.merpam.onenight.spotify.service.model.ImageResponse;
 import com.merpam.onenight.spotify.service.model.SongResponse;
 import com.merpam.onenight.utils.WebServiceUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Service
 public class PartyFacadeImpl implements PartyFacade {
@@ -31,7 +32,10 @@ public class PartyFacadeImpl implements PartyFacade {
 
     @Override
     public PartyModel createParty(String creatorUsername) {
-        String spotifyName = RandomStringUtils.randomAlphanumeric(PARTY_NAME_LENGTH);
+
+        Faker faker = new Faker();
+
+        String spotifyName = faker.color().name() + faker.cat().name();
 
         CreatePlaylistResponse createPlaylistResponse = spotifyWebService.createPlayList(spotifyName);
 
@@ -83,7 +87,7 @@ public class PartyFacadeImpl implements PartyFacade {
         song.setUri(songResponse.getUri());
         song.setCreator(user);
         song.setDuration(songResponse.getDuration_ms());
-        song.setArtistName(Arrays.stream(songResponse.getArtists()).findFirst().map(ArtistResponse::getName).orElse(StringUtils.EMPTY));
+        song.setArtists(Arrays.stream(songResponse.getArtists()).map(artist -> new ArtistModel(artist.getId(), artist.getName())).collect(Collectors.toList()));
         song.setAlbumCoverUrl(Arrays.stream(songResponse.getAlbum().getImages()).findFirst().map(ImageResponse::getUrl).orElse(StringUtils.EMPTY));
         party.getSongList().add(song);
         return partyService.saveParty(party);
