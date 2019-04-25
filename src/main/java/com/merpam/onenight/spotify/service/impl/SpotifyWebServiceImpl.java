@@ -12,9 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements SpotifyWebService {
@@ -27,10 +26,19 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
         Map<String, Object> queryParam = new HashMap<>();
         queryParam.put("q", query);
         queryParam.put("type", "track");
-        queryParam.put("limit", limit);
-        queryParam.put("offset", offset);
+        //queryParam.put("limit", limit);
+        //queryParam.put("offset", offset);
 
-        return doHttpGetRequest("/search", queryParam, SearchTracksResponse.class);
+        SearchTracksResponse searchTracksResponse = doHttpGetRequest("/search", queryParam, SearchTracksResponse.class);
+        List<SongResponse> songResponses = searchTracksResponse.getTracks().getItems();
+        searchTracksResponse.getTracks().setItems(songResponses
+                .stream()
+                .sorted(Comparator.comparingInt(SongResponse::getPopularity).reversed())
+                .skip(Long.parseLong(offset))
+                .limit(Long.parseLong(limit))
+                .collect(Collectors.toList()));
+
+        return searchTracksResponse;
     }
 
     @Override
