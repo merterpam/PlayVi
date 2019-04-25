@@ -17,6 +17,8 @@ public class SongResponse {
 
     private AlbumResponse album;
 
+    private int popularity;
+
     public String getName() {
         return name;
     }
@@ -63,5 +65,13 @@ public class SongResponse {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
     }
 }
