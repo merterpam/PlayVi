@@ -9,6 +9,7 @@ import com.merpam.onenight.session.SecurityConstants;
 import com.merpam.onenight.session.SessionUser;
 import com.merpam.onenight.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,8 @@ import java.util.Optional;
 @RequestMapping("/party")
 @CrossOrigin(origins = {"http://localhost:3000", "https://one-night-spotify.herokuapp.com"},
         allowCredentials = "true",
-        exposedHeaders = {SecurityConstants.TOKEN_HEADER} )
+        exposedHeaders = {SecurityConstants.TOKEN_HEADER},
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.OPTIONS, RequestMethod.HEAD})
 public class PartyController {
 
     private PartyFacade partyFacade;
