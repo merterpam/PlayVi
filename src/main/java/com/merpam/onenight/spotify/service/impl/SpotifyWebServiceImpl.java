@@ -26,8 +26,8 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
         Map<String, Object> queryParam = new HashMap<>();
         queryParam.put("q", query + "*");
         queryParam.put("type", "track");
-        //queryParam.put("limit", limit);
-        //queryParam.put("offset", offset);
+        queryParam.put("limit", limit);
+        queryParam.put("offset", offset);
         //TODO cleanup
 
         SearchTracksResponse searchTracksResponse = doHttpGetRequest("/search", queryParam, SearchTracksResponse.class);
@@ -35,8 +35,6 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
         searchTracksResponse.getTracks().setItems(songResponses
                 .stream()
                 .sorted(Comparator.comparingInt(SongResponse::getPopularity).reversed())
-                .skip(Long.parseLong(offset))
-                .limit(Long.parseLong(limit))
                 .collect(Collectors.toList()));
 
         return searchTracksResponse;
