@@ -28,7 +28,6 @@ public class SpotifyWebServiceImpl extends AbstractSpotifyWebService implements 
         queryParam.put("type", "track");
         queryParam.put("limit", limit);
         queryParam.put("offset", offset);
-        //TODO cleanup
 
         SearchTracksResponse searchTracksResponse = doHttpGetRequest("/search", queryParam, SearchTracksResponse.class);
         List<SongResponse> songResponses = searchTracksResponse.getTracks().getItems();
