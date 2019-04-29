@@ -38,19 +38,20 @@ public class PartyController {
     }
 
     @PostMapping
-    public PartyModel joinParty(@RequestParam("pin") String pin,
+    public UserModel joinParty(@RequestParam("pin") String pin,
                                 @RequestParam("username") String username,
                                 HttpServletResponse response) throws JsonProcessingException {
         PartyModel party = partyFacade.getPartyByPin(pin);
+        UserModel user = null;
 
         if (party != null) {
-            UserModel user = userFacade.createUser(username);
+             user = userFacade.createUser(username);
 
             SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), party.getId(), username);
             SessionUtils.setSessionUser(response, sessionUser);
         }
 
-        return party;
+        return user;
     }
 
     @GetMapping
