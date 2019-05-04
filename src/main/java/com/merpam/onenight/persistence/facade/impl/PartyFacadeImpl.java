@@ -38,9 +38,13 @@ public class PartyFacadeImpl implements PartyFacade {
         String spotifyName = faker.color().name() + faker.cat().name();
 
         CreatePlaylistResponse createPlaylistResponse = spotifyWebService.createPlayList(spotifyName);
+        String accessLink = createPlaylistResponse.getUri();
+        if (StringUtils.isBlank(accessLink)) {
+            throw new IllegalArgumentException("accessLink cannot be blank");
+        }
 
         return partyService.createParty(createPlaylistResponse.getId(),
-                createPlaylistResponse.getUri(),
+                accessLink,
                 spotifyName,
                 creatorUsername);
     }
