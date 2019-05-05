@@ -4,6 +4,7 @@ import org.glassfish.jersey.client.ClientProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -29,8 +30,7 @@ public class RestWebService {
         Response response = createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams).request(MediaType.APPLICATION_JSON)
                 .headers(headers)
                 .get();
-        Response.StatusType statusType = response.getStatusInfo();
-        LOG.info("Reason: {} Code: {}", statusType.getReasonPhrase(), statusType.getStatusCode());
+        processResponseStatusInfo(response);
         return response.readEntity(responseClass);
     }
 
@@ -43,8 +43,7 @@ public class RestWebService {
                 .request(MediaType.APPLICATION_JSON)
                 .headers(headers)
                 .post(postEntity);
-        Response.StatusType statusType = response.getStatusInfo();
-        LOG.info("Reason: {} Code: {}", statusType.getReasonPhrase(), statusType.getStatusCode());
+        processResponseStatusInfo(response);
         return response.readEntity(responseClass);
 
     }
@@ -77,5 +76,15 @@ public class RestWebService {
 
     private WebTarget buildBaseRequestURL(Client client) {
         return client.target(baseRequestUrl);
+    }
+
+    private void processResponseStatusInfo(Response response) {
+        Response.StatusType statusType = response.getStatusInfo();
+        if (statusType.getFamily() != Response.Status.Family.SUCCESSFUL) {
+            LOG.info("Unusual status info");
+            LOG.info("Reason: {} Code: {}", statusType.getReasonPhrase(), statusType.getStatusCode());
+            LOG.info(response.readEntity(String.class));
+            throw new ClientErrorException(statusType.toEnum());
+        }
     }
 }
