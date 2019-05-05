@@ -1,6 +1,8 @@
 package com.merpam.onenight.webservice;
 
 import org.glassfish.jersey.client.ClientProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -8,10 +10,12 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import java.util.Map;
 
 public class RestWebService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(RestWebService.class);
     private String baseRequestUrl;
 
     public RestWebService(String baseRequestUrl) {
@@ -22,9 +26,12 @@ public class RestWebService {
                                   Map<String, Object> queryParams,
                                   MultivaluedMap<String, Object> headers,
                                   Class<T> responseClass) {
-        return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams).request(MediaType.APPLICATION_JSON)
+        Response response = createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams).request(MediaType.APPLICATION_JSON)
                 .headers(headers)
-                .get(responseClass);
+                .get();
+        Response.StatusType statusType = response.getStatusInfo();
+        LOG.info("Reason: {} Code: {}", statusType.getReasonPhrase(), statusType.getStatusCode());
+        return response.readEntity(responseClass);
     }
 
     public <T> T doHttpPostRequest(String path,
@@ -32,11 +39,14 @@ public class RestWebService {
                                    MultivaluedMap<String, Object> headers,
                                    Entity<?> postEntity,
                                    Class<T> responseClass) {
-        return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
+        Response response = createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
                 .request(MediaType.APPLICATION_JSON)
                 .headers(headers)
-                .post(postEntity)
-                .readEntity(responseClass);
+                .post(postEntity);
+        Response.StatusType statusType = response.getStatusInfo();
+        LOG.info("Reason: {} Code: {}", statusType.getReasonPhrase(), statusType.getStatusCode());
+        return response.readEntity(responseClass);
+
     }
 
     public <T> T doHttpDeleteRequest(String path,

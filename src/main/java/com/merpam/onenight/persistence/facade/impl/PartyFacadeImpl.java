@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class PartyFacadeImpl implements PartyFacade {
 
-    private static final int PARTY_NAME_LENGTH = 10;
-
     private PartyService partyService;
     private UserService userService;
 
