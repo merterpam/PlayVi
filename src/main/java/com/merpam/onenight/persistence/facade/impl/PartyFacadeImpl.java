@@ -80,6 +80,11 @@ public class PartyFacadeImpl implements PartyFacade {
         if (party == null || user == null) {
             return null;
         }
+
+        if (party.getSongList().stream().anyMatch(song -> StringUtils.equals(song.getId(), songId))) {
+            return party; //Avoid adding duplicate songs, request from front-end
+        }
+
         SongResponse songResponse = spotifyWebService.getSong(songId); // TODO defensive programming
         spotifyWebService.addSongToPlaylist(party.getId(), songResponse.getUri());
 
