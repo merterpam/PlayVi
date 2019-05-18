@@ -85,6 +85,9 @@ public class RestWebService {
             LOG.info("Unusual status info");
             LOG.info("Reason: {} Code: {}", statusType.getReasonPhrase(), statusType.getStatusCode());
             LOG.info(response.readEntity(String.class));
+            for(String header : response.getHeaders().keySet()) {
+                LOG.info("{} : {}", header, response.getHeaderString(header));
+            }
             throw new ClientErrorException(statusType.toEnum());
         }
     }

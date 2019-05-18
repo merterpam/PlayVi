@@ -61,8 +61,8 @@ public final class SessionUtils {
                     .getSubject();
 
             return new ObjectMapper().readValue(jsonUser, SessionUser.class);
-        } catch (ExpiredJwtException ex) {
-            LOG.info("Expired token", ex);
+        } catch (ExpiredJwtException | MalformedJwtException ex) {
+            LOG.info("Bad token", ex);
             return null;
         }
     }
