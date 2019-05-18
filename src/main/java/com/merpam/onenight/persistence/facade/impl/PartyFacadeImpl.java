@@ -66,10 +66,13 @@ public class PartyFacadeImpl implements PartyFacade {
             return null;
         }
 
-        spotifyWebService.removeSongFromPlaylist(partyId, songId, position);
-        party.getSongList().remove(position);
-        return partyService.saveParty(party);
+        boolean deleted = spotifyWebService.removeSongFromPlaylist(partyId, songId, position);
+        if (deleted) {
+            party.getSongList().remove(position);
+            party = partyService.saveParty(party);
+        }
 
+        return party;
     }
 
     @Override
@@ -96,8 +99,13 @@ public class PartyFacadeImpl implements PartyFacade {
         song.setDuration(songResponse.getDuration_ms());
         song.setArtists(Arrays.stream(songResponse.getArtists()).map(artist -> new ArtistModel(artist.getId(), artist.getName())).collect(Collectors.toList()));
         song.setAlbumCoverUrl(Arrays.stream(songResponse.getAlbum().getImages()).findFirst().map(ImageResponse::getUrl).orElse(StringUtils.EMPTY));
-        party.getSongList().add(song);
-        return partyService.saveParty(party);
+
+        // TODO race condition which messes up with indexing
+        synchronized (partyId.intern()) {
+            party = partyService.getParty(partyId);
+            party.getSongList().add(song);
+            return partyService.saveParty(party);
+        }
     }
 
     @Autowired

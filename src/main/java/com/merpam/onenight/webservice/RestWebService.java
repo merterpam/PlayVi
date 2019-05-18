@@ -48,16 +48,17 @@ public class RestWebService {
 
     }
 
-    public <T> T doHttpDeleteRequest(String path,
+    public boolean doHttpDeleteRequest(String path,
                                      Map<String, Object> queryParams,
                                      Object requestBody,
-                                     MultivaluedMap<String, Object> headers,
-                                     Class<T> responseClass) {
-        return createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
+                                     MultivaluedMap<String, Object> headers) {
+        Response response = createWebTargetWithBaseRequestURLAndQueryParams(path, queryParams)
                 .property(ClientProperties.SUPPRESS_HTTP_COMPLIANCE_VALIDATION, true)
                 .request(MediaType.APPLICATION_JSON)
                 .headers(headers)
-                .method("DELETE", Entity.json(requestBody), responseClass);
+                .method("DELETE", Entity.json(requestBody));
+        processResponseStatusInfo(response);
+        return  response.getStatusInfo().getFamily() == Response.Status.Family.SUCCESSFUL;
     }
 
     private WebTarget createWebTargetWithBaseRequestURLAndQueryParams(String path, Map<String, Object> queryParams) {

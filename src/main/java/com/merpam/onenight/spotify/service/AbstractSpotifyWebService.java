@@ -63,13 +63,13 @@ public abstract class AbstractSpotifyWebService {
         }
     }
 
-    protected <T> T doHttpDeleteRequest(String path, Object requestBody, Class<T> responseClass) {
+    protected boolean doHttpDeleteRequest(String path, Object requestBody) {
         try {
-            return restWebService.doHttpDeleteRequest(path, Collections.emptyMap(), requestBody, createBearerHeaders(), responseClass);
+            return restWebService.doHttpDeleteRequest(path, Collections.emptyMap(), requestBody, createBearerHeaders());
         } catch (ClientErrorException | ProcessingException e) {
             LOGGER.info("Getting a new token with refresh token and trying again", e);
             spotifyAuthWebService.refreshToken();
-            return restWebService.doHttpDeleteRequest(path, Collections.emptyMap(), requestBody, createBearerHeaders(), responseClass);
+            return restWebService.doHttpDeleteRequest(path, Collections.emptyMap(), requestBody, createBearerHeaders());
         }
     }
 
