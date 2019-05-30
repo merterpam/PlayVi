@@ -59,49 +59,50 @@ public class PartyFacadeImpl implements PartyFacade {
 
     @Override
     public PartyModel removeSong(String userId, String partyId, String songId, int position) {
-        PartyModel party = partyService.getParty(partyId);
-        UserModel user = userService.findById(userId);
+        synchronized (partyId.intern()) {
+            PartyModel party = partyService.getParty(partyId);
+            UserModel user = userService.findById(userId);
 
-        if (party == null || user == null || WebServiceUtils.isSongRemovable(party, songId, position, user)) {
-            return null;
+            if (party == null || user == null || WebServiceUtils.isSongRemovable(party, songId, position, user)) {
+                return null;
+            }
+
+            boolean deleted = spotifyWebService.removeSongFromPlaylist(partyId, songId, position);
+            if (deleted) {
+                party.getSongList().remove(position);
+                party = partyService.saveParty(party);
+            }
+
+            return party;
         }
-
-        boolean deleted = spotifyWebService.removeSongFromPlaylist(partyId, songId, position);
-        if (deleted) {
-            party.getSongList().remove(position);
-            party = partyService.saveParty(party);
-        }
-
-        return party;
     }
 
     @Override
     public PartyModel addSong(String userId, String partyId, String songId) {
-        PartyModel party = partyService.getParty(partyId);
-        UserModel user = userService.findById(userId);
-
-        if (party == null || user == null) {
-            return null;
-        }
-
-        if (party.getSongList().stream().anyMatch(song -> StringUtils.equals(song.getId(), songId))) {
-            return party; //Avoid adding duplicate songs, request from front-end
-        }
-
-        SongResponse songResponse = spotifyWebService.getSong(songId); // TODO defensive programming
-        spotifyWebService.addSongToPlaylist(party.getId(), songResponse.getUri());
-
-        SongModel song = new SongModel();
-        song.setId(songResponse.getId());
-        song.setName(songResponse.getName()); //TODO wrap the logic to populator
-        song.setUri(songResponse.getUri());
-        song.setCreator(user);
-        song.setDuration(songResponse.getDuration_ms());
-        song.setArtists(Arrays.stream(songResponse.getArtists()).map(artist -> new ArtistModel(artist.getId(), artist.getName())).collect(Collectors.toList()));
-        song.setAlbumCoverUrl(Arrays.stream(songResponse.getAlbum().getImages()).findFirst().map(ImageResponse::getUrl).orElse(StringUtils.EMPTY));
-
-        // TODO race condition which messes up with indexing
         synchronized (partyId.intern()) {
+            PartyModel party = partyService.getParty(partyId);
+            UserModel user = userService.findById(userId);
+
+            if (party == null || user == null) {
+                return null;
+            }
+
+            if (party.getSongList().stream().anyMatch(song -> StringUtils.equals(song.getId(), songId))) {
+                return party; //Avoid adding duplicate songs, request from front-end
+            }
+
+            SongResponse songResponse = spotifyWebService.getSong(songId); // TODO defensive programming
+            spotifyWebService.addSongToPlaylist(party.getId(), songResponse.getUri());
+
+            SongModel song = new SongModel();
+            song.setId(songResponse.getId());
+            song.setName(songResponse.getName()); //TODO wrap the logic to populator
+            song.setUri(songResponse.getUri());
+            song.setCreator(user);
+            song.setDuration(songResponse.getDuration_ms());
+            song.setArtists(Arrays.stream(songResponse.getArtists()).map(artist -> new ArtistModel(artist.getId(), artist.getName())).collect(Collectors.toList()));
+            song.setAlbumCoverUrl(Arrays.stream(songResponse.getAlbum().getImages()).findFirst().map(ImageResponse::getUrl).orElse(StringUtils.EMPTY));
+
             party = partyService.getParty(partyId);
             party.getSongList().add(song);
             return partyService.saveParty(party);
