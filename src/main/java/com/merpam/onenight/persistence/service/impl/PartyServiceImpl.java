@@ -104,12 +104,12 @@ public class PartyServiceImpl implements PartyService {
                 return party; //Avoid adding duplicate songs, request from front-end
             }
 
-            SongResponse songResponse = spotifyWebService.getSong(songId); // TODO defensive programming
+            SongResponse songResponse = spotifyWebService.getSong(songId);
             spotifyWebService.addSongToPlaylist(party.getId(), songResponse.getUri());
 
             SongModel song = new SongModel();
             song.setId(songResponse.getId());
-            song.setName(songResponse.getName()); //TODO wrap the logic to populator
+            song.setName(songResponse.getName());
             song.setUri(songResponse.getUri());
             song.setCreator(user);
             song.setDuration(songResponse.getDuration_ms());
