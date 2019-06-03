@@ -10,9 +10,11 @@ public interface PartyService {
 
     void delete(PartyModel party);
 
-    PartyModel createParty(String id, String accessLink, String spotifyName, String creatorUsername);
+    PartyModel createParty(String creatorUsername);
 
-    PartyModel saveParty(PartyModel party);
+    PartyModel removeSong(String userId, String partyId, String songId, int position);
+
+    PartyModel addSong(String userId, String partyId, String songId);
 
     PartyModel getParty(String id);
 
