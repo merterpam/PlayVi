@@ -26,7 +26,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         try {
             properties.load(propertiesResource.getInputStream());
         } catch (IOException e) {
-            LOG.error("Cannot find propertıes path", e);
+            LOG.error("Cannot find properties path", e);
         }
     }
 
