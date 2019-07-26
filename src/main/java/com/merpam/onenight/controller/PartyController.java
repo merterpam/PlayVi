@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
-@CrossOrigin(origins = {"http://localhost:3000", "https://one-night-spotify.herokuapp.com"},
+@CrossOrigin(origins = {"http://localhost:3000", "https://one-night-spotify.herokuapp.com", “https://playvi.herokuapp.com“},
         allowCredentials = "true",
         exposedHeaders = {SecurityConstants.TOKEN_HEADER})
 public class PartyController {
