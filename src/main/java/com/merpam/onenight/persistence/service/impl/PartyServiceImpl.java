@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 public class PartyServiceImpl implements PartyService {
 
-    private static final int PIN_LENGTH = 5;
+    private static final int PIN_LENGTH = 4;
 
     private UserService userService;
 
