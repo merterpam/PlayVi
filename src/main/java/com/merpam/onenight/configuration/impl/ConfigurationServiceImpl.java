@@ -16,7 +16,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfigurationServiceImpl.class);
 
-    @Value(value = "classpath:${properties.path}")
+    @Value(value = "classpath:application.properties")
     private Resource propertiesResource;
 
     private final Properties properties = new Properties();
