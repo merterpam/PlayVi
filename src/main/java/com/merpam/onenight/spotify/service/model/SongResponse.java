@@ -13,6 +13,8 @@ public class SongResponse {
 
     private int duration_ms;
 
+    private String preview_url;
+
     private ArtistResponse[] artists;
 
     private AlbumResponse album;
@@ -73,5 +75,13 @@ public class SongResponse {
 
     public void setPopularity(int popularity) {
         this.popularity = popularity;
+    }
+
+    public String getPreview_url() {
+        return preview_url;
+    }
+
+    public void setPreview_url(String preview_url) {
+        this.preview_url = preview_url;
     }
 }
