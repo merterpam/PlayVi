@@ -62,4 +62,4 @@ Link to playlist and party pin can always be accessed through more options icon 
 
 ## __Client__
 
-Refer to [this repository](https://github.com/dbilgili/PlayVi/) for the source code of the server.
+Refer to [this repository](https://github.com/dbilgili/PlayVi/) for the source code of the client.
