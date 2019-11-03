@@ -1,6 +1,5 @@
 package com.merpam.onenight.persistence.service.impl;
 
-import com.github.javafaker.Faker;
 import com.merpam.onenight.persistence.dao.PartyDao;
 import com.merpam.onenight.persistence.model.ArtistModel;
 import com.merpam.onenight.persistence.model.PartyModel;
@@ -12,7 +11,7 @@ import com.merpam.onenight.spotify.service.SpotifyWebService;
 import com.merpam.onenight.spotify.service.model.CreatePlaylistResponse;
 import com.merpam.onenight.spotify.service.model.ImageResponse;
 import com.merpam.onenight.spotify.service.model.SongResponse;
-import com.merpam.onenight.utils.DateUtils;
+import com.merpam.onenight.persistence.strategy.NameGenerator;
 import com.merpam.onenight.utils.WebServiceUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -20,12 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PartyServiceImpl implements PartyService {
+public class DefaultPartyService implements PartyService {
 
     private static final int PIN_LENGTH = 4;
 
@@ -34,6 +32,8 @@ public class PartyServiceImpl implements PartyService {
     private PartyDao partyDao;
 
     private SpotifyWebService spotifyWebService;
+
+    private NameGenerator nameGenerator;
 
     @Override
     public List<PartyModel> findAll() {
@@ -48,9 +48,7 @@ public class PartyServiceImpl implements PartyService {
     @Override
     public PartyModel createParty(String creatorUsername) {
 
-        Faker faker = new Faker();
-
-        String spotifyName = faker.color().name() + faker.cat().name();
+        String spotifyName = nameGenerator.generateName();
 
         CreatePlaylistResponse createPlaylistResponse = spotifyWebService.createPlayList(spotifyName);
         String accessLink = createPlaylistResponse.getUri();
@@ -58,14 +56,11 @@ public class PartyServiceImpl implements PartyService {
             throw new IllegalArgumentException("accessLink cannot be blank");
         }
 
-        PartyModel party = new PartyModel();
-        party.setId(createPlaylistResponse.getId());
-        party.setAccessLink(accessLink);
-        party.setSpotifyName(spotifyName);
-        party.setCreator(userService.createUser(creatorUsername));
-        party.setPin(generateUniquePin());
-        party.setSongList(Collections.emptyList());
-        party.setTimestamp(DateUtils.getCurrentTimestampInSeconds());
+        UserModel creator = userService.createUser(creatorUsername);
+        String id = createPlaylistResponse.getId();
+        String pin = generateUniquePin();
+
+        PartyModel party = new PartyModel(accessLink, creator, id, pin, spotifyName);
 
         return partyDao.insert(party);
     }
@@ -76,6 +71,7 @@ public class PartyServiceImpl implements PartyService {
             PartyModel party = getParty(partyId);
             UserModel user = userService.findById(userId);
 
+            //TODO check if this works
             if (party == null || user == null || WebServiceUtils.isSongRemovable(party, songId, position, user)) {
                 return null;
             }
@@ -162,5 +158,10 @@ public class PartyServiceImpl implements PartyService {
     @Autowired
     public void setSpotifyWebService(SpotifyWebService spotifyWebService) {
         this.spotifyWebService = spotifyWebService;
+    }
+
+    @Autowired
+    public void setNameGenerator(NameGenerator nameGenerator) {
+        this.nameGenerator = nameGenerator;
     }
 }
