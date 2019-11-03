@@ -1,7 +1,7 @@
 package com.merpam.onenight.spotify.service.impl;
 
-import com.merpam.onenight.configuration.ConfigurationService;
-import com.merpam.onenight.constants.Constants;
+import com.merpam.onenight.configuration.DynamicPropertyService;
+import com.merpam.onenight.spotify.constants.Constants;
 import com.merpam.onenight.spotify.service.SpotifyAuthWebService;
 import com.merpam.onenight.spotify.service.model.RefreshTokenResponse;
 import com.merpam.onenight.webservice.RestWebService;
@@ -26,15 +26,15 @@ public class SpotifyAuthWebServiceImpl implements SpotifyAuthWebService {
     private static final String SPOTIFY_TOKEN_TYPE = "spotify.api.token.type";
 
 
-    private ConfigurationService configurationService;
+    private DynamicPropertyService dynamicPropertyService;
     private RestWebService restWebService;
 
 
     @Autowired
-    public SpotifyAuthWebServiceImpl(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public SpotifyAuthWebServiceImpl(DynamicPropertyService dynamicPropertyService) {
+        this.dynamicPropertyService = dynamicPropertyService;
 
-        String baseRequestUrl = this.configurationService.getProperty(SPOTIFY_ACCOUNT_TOKEN_URL);
+        String baseRequestUrl = this.dynamicPropertyService.getProperty(SPOTIFY_ACCOUNT_TOKEN_URL);
         this.restWebService = new RestWebService(baseRequestUrl);
     }
 
@@ -43,7 +43,7 @@ public class SpotifyAuthWebServiceImpl implements SpotifyAuthWebService {
     public void refreshToken() {
         MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
         formData.putSingle("grant_type", "refresh_token");
-        formData.putSingle("refresh_token", configurationService.getProperty(SPOTIFY_REFRESH_TOKEN));
+        formData.putSingle("refresh_token", dynamicPropertyService.getProperty(SPOTIFY_REFRESH_TOKEN));
 
         RefreshTokenResponse response = restWebService.doHttpPostRequest("/token",
                 Collections.emptyMap(),
@@ -51,8 +51,8 @@ public class SpotifyAuthWebServiceImpl implements SpotifyAuthWebService {
                 Entity.form(formData),
                 RefreshTokenResponse.class);
 
-        configurationService.setProperty(SPOTIFY_ACCESS_TOKEN, response.getAccess_token());
-        configurationService.setProperty(SPOTIFY_TOKEN_TYPE, response.getToken_type());
+        dynamicPropertyService.setProperty(SPOTIFY_ACCESS_TOKEN, response.getAccess_token());
+        dynamicPropertyService.setProperty(SPOTIFY_TOKEN_TYPE, response.getToken_type());
     }
 
     private MultivaluedMap<String, Object> createBasicAuthHeaders() {
@@ -63,8 +63,8 @@ public class SpotifyAuthWebServiceImpl implements SpotifyAuthWebService {
     }
 
     private String getEncodedClientInformation() {
-        String clientId = configurationService.getProperty(SPOTIFY_CLIENT_ID);
-        String clientSecret = configurationService.getProperty(SPOTIFY_CLIENT_SECRET);
+        String clientId = dynamicPropertyService.getProperty(SPOTIFY_CLIENT_ID);
+        String clientSecret = dynamicPropertyService.getProperty(SPOTIFY_CLIENT_SECRET);
         return Base64.encodeAsString(clientId + ":" + clientSecret);
     }
 

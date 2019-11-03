@@ -1,6 +1,6 @@
 package com.merpam.onenight.spotify.service;
 
-import com.merpam.onenight.configuration.ConfigurationService;
+import com.merpam.onenight.configuration.DynamicPropertyService;
 import com.merpam.onenight.webservice.RestWebService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +24,14 @@ public abstract class AbstractSpotifyWebService {
 
     private Logger LOGGER = LoggerFactory.getLogger(AbstractSpotifyWebService.class);
 
-    private ConfigurationService configurationService;
+    private DynamicPropertyService dynamicPropertyService;
     private SpotifyAuthWebService spotifyAuthWebService;
 
     private RestWebService restWebService;
 
     @PostConstruct
     public void init() {
-        String baseUrl = configurationService.getProperty(SPOTIFY_BASE_URL);
+        String baseUrl = dynamicPropertyService.getProperty(SPOTIFY_BASE_URL);
         restWebService = new RestWebService(baseUrl);
     }
 
@@ -77,14 +77,14 @@ public abstract class AbstractSpotifyWebService {
         MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
         headers.putSingle("Accept", "application/json");
         headers.putSingle("Content-Type", "application/json");
-        headers.putSingle("Authorization", "Bearer " + configurationService.getProperty(SPOTIFY_ACCESS_TOKEN));
+        headers.putSingle("Authorization", "Bearer " + dynamicPropertyService.getProperty(SPOTIFY_ACCESS_TOKEN));
 
         return headers;
     }
 
     @Resource
-    public void setConfigurationService(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public void setDynamicPropertyService(DynamicPropertyService dynamicPropertyService) {
+        this.dynamicPropertyService = dynamicPropertyService;
     }
 
     @Resource
