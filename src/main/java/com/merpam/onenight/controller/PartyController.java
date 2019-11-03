@@ -6,7 +6,7 @@ import com.merpam.onenight.persistence.facade.UserFacade;
 import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.model.UserModel;
 import com.merpam.onenight.session.SecurityConstants;
-import com.merpam.onenight.session.SessionUser;
+import com.merpam.onenight.session.model.SessionUser;
 import com.merpam.onenight.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

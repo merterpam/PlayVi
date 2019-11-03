@@ -3,7 +3,7 @@ package com.merpam.onenight.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.merpam.onenight.session.SecurityConstants;
-import com.merpam.onenight.session.SessionUser;
+import com.merpam.onenight.session.model.SessionUser;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;

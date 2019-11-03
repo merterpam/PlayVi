@@ -1,4 +1,4 @@
-package com.merpam.onenight.session;
+package com.merpam.onenight.session.model;
 
 public class SessionUser {
 
