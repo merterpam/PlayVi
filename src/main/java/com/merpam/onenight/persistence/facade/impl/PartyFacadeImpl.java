@@ -3,12 +3,14 @@ package com.merpam.onenight.persistence.facade.impl;
 import com.merpam.onenight.persistence.facade.PartyFacade;
 import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.service.PartyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class PartyFacadeImpl implements PartyFacade {
 
+    @Resource
     private PartyService partyService;
 
     @Override
@@ -36,8 +38,4 @@ public class PartyFacadeImpl implements PartyFacade {
         return partyService.addSong(userId, partyId, songId);
     }
 
-    @Autowired
-    public void setPartyService(PartyService partyService) {
-        this.partyService = partyService;
-    }
 }
