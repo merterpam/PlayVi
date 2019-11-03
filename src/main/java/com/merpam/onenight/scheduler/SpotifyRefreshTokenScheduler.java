@@ -1,6 +1,6 @@
 package com.merpam.onenight.scheduler;
 
-import com.merpam.onenight.configuration.ConfigurationService;
+import com.merpam.onenight.configuration.DynamicPropertyService;
 import com.merpam.onenight.spotify.service.SpotifyAuthWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,7 +14,7 @@ public class SpotifyRefreshTokenScheduler {
     private static final String SPOTIFY_REFRESH_TOKEN_EXPIRES_IN = "spotify.api.refresh.expires_in";
 
     private SpotifyAuthWebService spotifyAuthWebService;
-    private ConfigurationService configurationService;
+    private DynamicPropertyService dynamicPropertyService;
 
     @PostConstruct
     public void onStartup() {
@@ -33,7 +33,7 @@ public class SpotifyRefreshTokenScheduler {
 
     private long getExpiresIn() {
 
-        return Long.parseLong(configurationService.getProperty("SPOTIFY_REFRESH_TOKEN_EXPIRES_IN"));
+        return Long.parseLong(dynamicPropertyService.getProperty("SPOTIFY_REFRESH_TOKEN_EXPIRES_IN"));
     }
 
     @Autowired
@@ -42,7 +42,7 @@ public class SpotifyRefreshTokenScheduler {
     }
 
     @Autowired
-    public void setConfigurationService(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public void setDynamicPropertyService(DynamicPropertyService dynamicPropertyService) {
+        this.dynamicPropertyService = dynamicPropertyService;
     }
 }
