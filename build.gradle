@@ -29,7 +29,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.10.6'
     implementation 'com.github.javafaker:javafaker:0.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test' 
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     
 }
 
