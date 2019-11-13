@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserFacadeImpl implements UserFacade {
+public class DefaultUserFacade implements UserFacade {
 
     private UserService userService;
 
