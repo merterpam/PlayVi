@@ -1,0 +1,12 @@
+{
+  "accessLink": "ACCESS_LINK_TWO",
+  "creator": {
+    "id": null,
+    "username": "CREATOR_USERNAME_TWO",
+    "timestamp": 2
+  },
+  "id": "ID_TWO",
+  "spotifyName": "SPOTIFY_TWO",
+  "songList": [],
+  "pin": "PIN_TWO"
+}
