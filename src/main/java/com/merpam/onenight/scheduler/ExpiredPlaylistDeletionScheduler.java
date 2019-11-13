@@ -33,7 +33,7 @@ public class ExpiredPlaylistDeletionScheduler {
                 .stream()
                 .filter(party -> party.getTimestamp() < DateUtils.getCurrentTimestampInSeconds() - Constants.EXPIRATION_INTERVAL)
                 .forEach(party -> {
-                            partyService.delete(party);
+                            partyService.deleteById(party.getId());
                             spotifyWebService.deletePlaylist(party.getId());
                         }
                 );

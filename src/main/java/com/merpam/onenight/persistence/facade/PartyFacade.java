@@ -6,7 +6,7 @@ public interface PartyFacade {
 
     PartyModel createParty(String creatorUsername);
 
-    PartyModel getParty(String id);
+    PartyModel getPartyById(String id);
 
     PartyModel getPartyByPin(String pin);
 

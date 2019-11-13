@@ -41,8 +41,8 @@ public class DefaultPartyService implements PartyService {
     }
 
     @Override
-    public void delete(PartyModel party) {
-        partyDao.delete(party);
+    public void deleteById(String partyId) {
+        partyDao.deleteById(partyId);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class DefaultPartyService implements PartyService {
     @Override
     public PartyModel removeSong(String userId, String partyId, String songId, int position) {
         synchronized (partyId.intern()) {
-            PartyModel party = getParty(partyId);
+            PartyModel party = findPartyById(partyId);
             UserModel user = userService.findById(userId);
 
             //TODO check if this works
@@ -89,7 +89,7 @@ public class DefaultPartyService implements PartyService {
     @Override
     public PartyModel addSong(String userId, String partyId, String songId) {
         synchronized (partyId.intern()) {
-            PartyModel party = getParty(partyId);
+            PartyModel party = findPartyById(partyId);
             UserModel user = userService.findById(userId);
 
             if (party == null || user == null) {
@@ -112,7 +112,7 @@ public class DefaultPartyService implements PartyService {
             song.setArtists(Arrays.stream(songResponse.getArtists()).map(artist -> new ArtistModel(artist.getId(), artist.getName())).collect(Collectors.toList()));
             song.setAlbumCoverUrl(Arrays.stream(songResponse.getAlbum().getImages()).findFirst().map(ImageResponse::getUrl).orElse(StringUtils.EMPTY));
 
-            party = getParty(partyId);
+            party = findPartyById(partyId);
             party.getSongList().add(song);
             return partyDao.save(party);
         }
@@ -128,7 +128,7 @@ public class DefaultPartyService implements PartyService {
     }
 
     @Override
-    public PartyModel getParty(String id) {
+    public PartyModel findPartyById(String id) {
         if (id == null) {
             return null;
         }
@@ -137,7 +137,7 @@ public class DefaultPartyService implements PartyService {
     }
 
     @Override
-    public PartyModel getPartyByPin(String pin) {
+    public PartyModel findPartyByPin(String pin) {
         if (pin == null) {
             return null;
         }

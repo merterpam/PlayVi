@@ -6,9 +6,17 @@ import java.util.List;
 
 public interface PartyService {
 
+    /**
+     * Finds and returns all parties
+     * @return all parties in
+     */
     List<PartyModel> findAll();
 
-    void delete(PartyModel party);
+    /**
+     * Deletes the party with the given id
+     * @param partyId is the given id
+     */
+    void deleteById(String partyId);
 
     PartyModel createParty(String creatorUsername);
 
@@ -16,7 +24,7 @@ public interface PartyService {
 
     PartyModel addSong(String userId, String partyId, String songId);
 
-    PartyModel getParty(String id);
+    PartyModel findPartyById(String id);
 
-    PartyModel getPartyByPin(String pin);
+    PartyModel findPartyByPin(String pin);
 }

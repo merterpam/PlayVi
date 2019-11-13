@@ -58,7 +58,7 @@ public class PartyController {
     public PartyModel getParty(HttpServletRequest request) throws IOException {
         return Optional
                 .ofNullable(SessionUtils.getSessionUser(request))
-                .map(s -> partyFacade.getParty(s.getPartyId()))
+                .map(s -> partyFacade.getPartyById(s.getPartyId()))
                 .orElse(null);
     }
 

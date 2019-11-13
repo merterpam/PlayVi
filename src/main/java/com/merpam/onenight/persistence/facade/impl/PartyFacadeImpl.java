@@ -19,13 +19,13 @@ public class PartyFacadeImpl implements PartyFacade {
     }
 
     @Override
-    public PartyModel getParty(String id) {
-        return partyService.getParty(id);
+    public PartyModel getPartyById(String id) {
+        return partyService.findPartyById(id);
     }
 
     @Override
     public PartyModel getPartyByPin(String pin) {
-        return partyService.getPartyByPin(pin);
+        return partyService.findPartyByPin(pin);
     }
 
     @Override
