@@ -13,6 +13,10 @@ public class UserModel {
 
     private long timestamp;
 
+    public UserModel() {
+
+    }
+
     public UserModel(String username, long timestamp) {
         this.username = username;
         this.timestamp = timestamp;

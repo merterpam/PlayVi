@@ -1,13 +1,29 @@
 package com.merpam.onenight.persistence.model;
 
+import com.merpam.onenight.utils.DateUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Collections;
 import java.util.List;
 
 @Document
 public class PartyModel {
+
+    public PartyModel() {
+
+    }
+
+    public PartyModel(String accessLink, UserModel creator, String id, String pin, String spotifyName) {
+        setAccessLink(accessLink);
+        setCreator(creator);
+        setId(id);
+        setPin(pin);
+        setSongList(Collections.emptyList());
+        setSpotifyName(spotifyName);
+        setTimestamp(DateUtils.getCurrentTimestampInSeconds());
+    }
 
     private String accessLink;
 
