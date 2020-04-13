@@ -26,11 +26,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserModel> findById(String id) {
-        return Optional.ofNullable(id).flatMap(getUserDao()::findById);
-    }
-
-    @Override
     public UserModel createUser(String username) {
         return getUserDao().insert(new UserModel(username, DateUtils.getCurrentTimestampInSeconds()));
     }

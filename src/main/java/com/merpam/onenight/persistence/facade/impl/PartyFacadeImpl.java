@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class DefaultPartyFacade implements PartyFacade {
+public class PartyFacadeImpl implements PartyFacade {
 
     @Autowired
     protected PartyService partyService;
@@ -61,11 +61,6 @@ public class DefaultPartyFacade implements PartyFacade {
                 .map(UserModel::getPartyId)
                 .flatMap(partyService::findById)
                 .orElseThrow(() -> new NotFoundException("Current party cannot be found"));
-    }
-
-    @Override
-    public PartyModel getPartyById(String id) {
-        return partyService.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override

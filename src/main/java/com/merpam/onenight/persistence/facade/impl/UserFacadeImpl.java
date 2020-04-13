@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.NotFoundException;
 
 @Service
-public class DefaultUserFacade implements UserFacade {
+public class UserFacadeImpl implements UserFacade {
 
     private UserService userService;
 
