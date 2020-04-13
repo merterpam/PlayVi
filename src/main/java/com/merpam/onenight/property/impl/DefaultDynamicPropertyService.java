@@ -1,6 +1,6 @@
-package com.merpam.onenight.configuration.impl;
+package com.merpam.onenight.property.impl;
 
-import com.merpam.onenight.configuration.DynamicPropertyService;
+import com.merpam.onenight.property.DynamicPropertyService;
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Service
-public class DynamicPropertyServiceImpl implements DynamicPropertyService {
+public class DefaultDynamicPropertyService implements DynamicPropertyService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DynamicPropertyServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultDynamicPropertyService.class);
 
     @Value("${configuration.service.properties.path}")
     private String propertiesResourcePath;
@@ -35,15 +35,9 @@ public class DynamicPropertyServiceImpl implements DynamicPropertyService {
             Resource propertiesResource = resourceLoader.getResource(String.format("classpath:%s", propertiesResourcePath));
             properties.load(propertiesResource.getInputStream());
             properties.replaceAll((k, v) -> StrSubstitutor.replace(v, System.getenv()));
-            testLANG1055();
         } catch (IOException e) {
             LOG.error("Cannot find properties path", e);
         }
-    }
-
-    public void testLANG1055() {
-        System.setProperty("test_key", "test_value");
-        final String expected = StrSubstitutor.replace("test_key=${test_key}", System.getProperties());
     }
 
     @Override

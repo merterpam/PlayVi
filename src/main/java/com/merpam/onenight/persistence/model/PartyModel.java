@@ -15,10 +15,10 @@ public class PartyModel {
 
     }
 
-    public PartyModel(String accessLink, UserModel creator, String id, String pin, String spotifyName) {
+    public PartyModel(String accessLink, String creatorId, String spotifyId, String pin, String spotifyName) {
         setAccessLink(accessLink);
-        setCreator(creator);
-        setId(id);
+        setCreatorId(creatorId);
+        setSpotifyId(spotifyId);
         setPin(pin);
         setSongList(Collections.emptyList());
         setSpotifyName(spotifyName);
@@ -27,10 +27,12 @@ public class PartyModel {
 
     private String accessLink;
 
-    private UserModel creator;
+    private String creatorId;
 
     @Id
     private String id;
+
+    private String spotifyId;
 
     private String spotifyName;
 
@@ -49,13 +51,6 @@ public class PartyModel {
         this.accessLink = accessLink;
     }
 
-    public UserModel getCreator() {
-        return creator;
-    }
-
-    public void setCreator(UserModel creator) {
-        this.creator = creator;
-    }
 
     public String getId() {
         return id;
@@ -95,5 +90,21 @@ public class PartyModel {
 
     public void setSpotifyName(String spotifyName) {
         this.spotifyName = spotifyName;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getSpotifyId() {
+        return spotifyId;
+    }
+
+    public void setSpotifyId(String spotifyId) {
+        this.spotifyId = spotifyId;
     }
 }

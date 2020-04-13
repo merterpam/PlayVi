@@ -1,6 +1,6 @@
 package com.merpam.onenight.scheduler;
 
-import com.merpam.onenight.configuration.DynamicPropertyService;
+import com.merpam.onenight.property.DynamicPropertyService;
 import com.merpam.onenight.spotify.service.SpotifyAuthWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

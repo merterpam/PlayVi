@@ -1,26 +1,16 @@
 package com.merpam.onenight.persistence.service.impl;
 
-import com.merpam.onenight.AbstractIntegrationTest;
-import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.service.PartyService;
-import com.merpam.onenight.utils.TestUtils;
-import de.flapdoodle.embed.process.collections.Collections;
-import org.apache.commons.lang.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-import java.util.Optional;
-
-public class DefaultPartyServiceTest extends AbstractIntegrationTest {
+public class PartyServiceImplTest {
 
     private static final String PARTY_ONE_ID = "ID_ONE";
     private static final String PARTY_ONE_PIN = "1111";
     @Autowired
     private PartyService partyService;
 
-    @Test
+ /*   @Test
     public void testFindAll() {
 
         final PartyModel samplePartyOne = TestUtils.loadData("test/sampledata/party/partyOne.json", PartyModel.class);
@@ -37,7 +27,8 @@ public class DefaultPartyServiceTest extends AbstractIntegrationTest {
                 .findAny();
 
         Assert.assertTrue(optionalSamplePartyOne.isPresent());
-        Assert.assertEquals(TestUtils.convertToJson(samplePartyOne), TestUtils.convertToJson(optionalSamplePartyOne.get()));
+        Assert.assertEquals(TestUtils.convertToJson(samplePartyOne),
+                TestUtils.convertToJson(optionalSamplePartyOne.get()));
 
         Optional<PartyModel> optionalSamplePartyTwo = parties.stream()
                 .filter(party -> {
@@ -47,7 +38,8 @@ public class DefaultPartyServiceTest extends AbstractIntegrationTest {
                 .findAny();
 
         Assert.assertTrue(optionalSamplePartyTwo.isPresent());
-        Assert.assertEquals(TestUtils.convertToJson(samplePartyTwo), TestUtils.convertToJson(optionalSamplePartyTwo.get()));
+        Assert.assertEquals(TestUtils.convertToJson(samplePartyTwo),
+                TestUtils.convertToJson(optionalSamplePartyTwo.get()));
     }
 
     @Test
@@ -82,5 +74,5 @@ public class DefaultPartyServiceTest extends AbstractIntegrationTest {
         partyService.deleteById(PARTY_ONE_ID);
 
         Assert.assertNull(partyService.findPartyById(PARTY_ONE_ID));
-    }
+    } */
 }

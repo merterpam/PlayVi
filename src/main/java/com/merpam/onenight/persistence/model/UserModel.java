@@ -11,6 +11,8 @@ public class UserModel {
 
     private String username;
 
+    private String partyId;
+
     private long timestamp;
 
     public UserModel() {
@@ -40,5 +42,13 @@ public class UserModel {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getPartyId() {
+        return partyId;
+    }
+
+    public void setPartyId(String partyId) {
+        this.partyId = partyId;
     }
 }

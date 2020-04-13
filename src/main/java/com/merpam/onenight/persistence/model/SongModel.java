@@ -15,7 +15,7 @@ public class SongModel {
 
     private String uri;
 
-    private UserModel creator;
+    private String creatorId;
 
     private int duration;
 
@@ -47,14 +47,6 @@ public class SongModel {
         this.uri = uri;
     }
 
-    public UserModel getCreator() {
-        return creator;
-    }
-
-    public void setCreator(UserModel creator) {
-        this.creator = creator;
-    }
-
     public int getDuration() {
         return duration;
     }
@@ -77,5 +69,13 @@ public class SongModel {
 
     public void setArtists(List<ArtistModel> artists) {
         this.artists = artists;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 }

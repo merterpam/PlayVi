@@ -1,4 +1,4 @@
-package com.merpam.onenight.configuration;
+package com.merpam.onenight.property;
 
 public interface DynamicPropertyService {
     String getProperty(String key);

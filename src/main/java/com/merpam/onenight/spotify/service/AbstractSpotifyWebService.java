@@ -1,6 +1,6 @@
 package com.merpam.onenight.spotify.service;
 
-import com.merpam.onenight.configuration.DynamicPropertyService;
+import com.merpam.onenight.property.DynamicPropertyService;
 import com.merpam.onenight.webservice.RestWebService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

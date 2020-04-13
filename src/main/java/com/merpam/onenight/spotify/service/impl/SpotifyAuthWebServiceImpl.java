@@ -1,6 +1,6 @@
 package com.merpam.onenight.spotify.service.impl;
 
-import com.merpam.onenight.configuration.DynamicPropertyService;
+import com.merpam.onenight.property.DynamicPropertyService;
 import com.merpam.onenight.constants.Constants;
 import com.merpam.onenight.spotify.service.SpotifyAuthWebService;
 import com.merpam.onenight.spotify.service.model.RefreshTokenResponse;
