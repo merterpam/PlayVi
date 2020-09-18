@@ -1,6 +1,6 @@
 # PlayVi
 
-[__Try PlayVi !__](https://playvi.co) 🎉 (Looks better on mobile)
+[__Try PlayVi !__](https://playvi.app) 🎉 (Looks better on mobile)
 
 __PlayVi__ is a web application built on top of Spotify API in order to simplify the process of creating a public playlist and collaborating on it with minimum hassle.
 
