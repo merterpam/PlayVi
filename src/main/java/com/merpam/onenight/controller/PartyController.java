@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
-@CrossOrigin(origins = {"*"},
+@CrossOrigin(origins = {"https://dbilgili.github.io/", "https://dbilgili.github.io", "https://github.io", "https://github.io/"},
         allowCredentials = "true",
         exposedHeaders = {SecurityConstants.TOKEN_HEADER})
 public class PartyController {
