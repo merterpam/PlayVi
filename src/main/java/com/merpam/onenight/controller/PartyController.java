@@ -5,7 +5,6 @@ import com.merpam.onenight.persistence.facade.PartyFacade;
 import com.merpam.onenight.persistence.facade.UserFacade;
 import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.model.UserModel;
-import com.merpam.onenight.session.SecurityConstants;
 import com.merpam.onenight.session.SessionUser;
 import com.merpam.onenight.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
-@CrossOrigin(origins = {"https://dbilgili.github.io/", "https://dbilgili.github.io", "https://github.io", "https://github.io/"},
+/*@CrossOrigin(origins = {"https://dbilgili.github.io/", "https://dbilgili.github.io", "https://github.io", "https://github.io/"},
         allowCredentials = "true",
-        exposedHeaders = {SecurityConstants.TOKEN_HEADER})
+        exposedHeaders = {SecurityConstants.TOKEN_HEADER})*/
 public class PartyController {
 
     private PartyFacade partyFacade;
@@ -28,7 +27,8 @@ public class PartyController {
 
 
     @PostMapping("/create")
-    public PartyModel createParty(@RequestParam("username") String username, HttpServletResponse response) throws JsonProcessingException {
+    public PartyModel createParty(@RequestParam("username") String username,
+                                  HttpServletResponse response) throws JsonProcessingException {
         PartyModel party = partyFacade.createParty(username);
 
         SessionUser sessionUser = SessionUtils.generateSessionUser(party.getCreator().getId(), party.getId(), username);
@@ -39,13 +39,13 @@ public class PartyController {
 
     @PostMapping
     public UserModel joinParty(@RequestParam("pin") String pin,
-                                @RequestParam("username") String username,
-                                HttpServletResponse response) throws JsonProcessingException {
+                               @RequestParam("username") String username,
+                               HttpServletResponse response) throws JsonProcessingException {
         PartyModel party = partyFacade.getPartyByPin(pin);
         UserModel user = null;
 
         if (party != null) {
-             user = userFacade.createUser(username);
+            user = userFacade.createUser(username);
 
             SessionUser sessionUser = SessionUtils.generateSessionUser(user.getId(), party.getId(), username);
             SessionUtils.setSessionUser(response, sessionUser);
@@ -63,7 +63,8 @@ public class PartyController {
     }
 
     @PostMapping("/addSong")
-    public PartyModel addSongToParty(@RequestParam("songId") String songId, HttpServletRequest request) throws IOException {
+    public PartyModel addSongToParty(@RequestParam("songId") String songId,
+                                     HttpServletRequest request) throws IOException {
         String partyId = null;
         String userId = null;
 
@@ -77,7 +78,8 @@ public class PartyController {
     }
 
     @DeleteMapping("/removeSong")
-    public PartyModel removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position, HttpServletRequest request) throws IOException {
+    public PartyModel removeSongFromParty(@RequestParam("songId") String songId, @RequestParam("position") int position,
+                                          HttpServletRequest request) throws IOException {
         String partyId = null;
         String userId = null;
 
