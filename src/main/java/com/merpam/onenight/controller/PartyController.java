@@ -5,7 +5,6 @@ import com.merpam.onenight.persistence.facade.PartyFacade;
 import com.merpam.onenight.persistence.facade.UserFacade;
 import com.merpam.onenight.persistence.model.PartyModel;
 import com.merpam.onenight.persistence.model.UserModel;
-import com.merpam.onenight.session.SecurityConstants;
 import com.merpam.onenight.session.SessionUser;
 import com.merpam.onenight.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/party")
-@CrossOrigin(origins = {"https://dbilgili.github.io/", "https://dbilgili.github.io", "https://github.io", "https://github.io/"},
-        allowCredentials = "true",
-        exposedHeaders = {SecurityConstants.TOKEN_HEADER})
 public class PartyController {
 
     private PartyFacade partyFacade;
