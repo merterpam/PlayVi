@@ -9,6 +9,8 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedMethods("*");
+        registry.addMapping("/**")
+                .allowedMethods("*")
+                .allowedOrigins("https://dbilgili.github.io/PlayVi/");
     }
 }
